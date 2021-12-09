@@ -54,7 +54,7 @@ jobs:
 
     - name: RunDemo
       working-directory: ${{github.workspace}}/build
-      run: ./Release/readjpeg.exe
+      run: ./${{env.BUILD_TYPE}}/readjpeg.exe
       
     - name: Test
       working-directory: ${{github.workspace}}/build
