@@ -3,8 +3,6 @@ project(readjpeg VERSION 0.1.0)
 
 include(CTest)
 enable_testing()
-#set(CMAKE_PREFIX_PATH "D:/Library/new/itk_5.1/lib/cmake/ITK-5.1")
-set(ITK_DIR "D:/Library/new/itk_debug/lib/cmake/ITK-5.3")
 find_package(ITK REQUIRED)
 include_directories(${ITK_INCLUDES})
 message(STATUS "ITK: ${ITK_INCLUDES}")
