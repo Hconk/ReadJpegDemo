@@ -1,0 +1,17 @@
+cmake_minimum_required(VERSION 3.0.0)
+project(readjpeg VERSION 0.1.0)
+
+include(CTest)
+enable_testing()
+#set(CMAKE_PREFIX_PATH "D:/Library/new/itk_5.1/lib/cmake/ITK-5.1")
+set(ITK_DIR "D:/Library/new/itk_debug/lib/cmake/ITK-5.3")
+find_package(ITK REQUIRED)
+include_directories(${ITK_INCLUDES})
+message(STATUS "ITK: ${ITK_INCLUDES}")
+message(STATUS "ITK LIBS: ${ITK_LIBRARIES}")
+add_executable(readjpeg main.cpp)
+target_link_libraries(readjpeg ${ITK_LIBRARIES})
+
+set(CPACK_PROJECT_NAME ${PROJECT_NAME})
+set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
+include(CPack)
