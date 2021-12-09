@@ -1,0 +1,63 @@
+name: CMake
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Debug
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
+    # You can convert this to a matrix build if you need cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      # explicit include-based build matrix, of known valid options
+      matrix:
+        include:
+          - os: windows-2016
+            visual_studio: "Visual Studio 15 2017"
+
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: cmake version
+      shell: bash
+      run: cmake --version
+   
+      
+    - name: CloneITK
+      run: git clone https://github.com/InsightSoftwareConsortium/ITK.git ${{github.workspace}}/ITK
+    - name: ConfigITK
+      run: cmake ${{github.workspace}}/ITK -G "Visual Studio 15 2017 Win64" -B ${{github.workspace}}/build_itk -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/itk_install \
+            -DBUILD_TESTING=OFF -DEXPAT_BUILD_TESTS=OFF \ 
+            -DBUILD_EXAMPLES=OFF -DEXPAT_BUILD_EXAMPLES=OFF -DITK_BUILD_DEFAULT_MODULES=OFF -DModule_ITKIOJPEG2000=ON -DModule_ITKOpenJPEG=ON
+    - name: BuildITK
+      run: cmake --build ${{github.workspace}}/build_itk --target install --config ${{env.BUILD_TYPE}} -- /m
+    - name: ListITK
+      run: dir ${{github.workspace}}/itk_install
+    
+    - name: Configure CMake
+      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+      run: cmake -G "Visual Studio 15 2017 Win64" -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DITK_DIR=${{github.workspace}}/itk_install/lib/cmake/ITK-5.3/
+      
+    - name: Build
+      # Build your program with the given configuration
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} -- /m
+
+    - name: RunDemo
+      working-directory: ${{github.workspace}}/build
+      run: ./${{env.BUILD_TYPE}}/readjpeg.exe
+      
+    - name: Test
+      working-directory: ${{github.workspace}}/build
+      # Execute tests defined by the CMake configuration.  
+      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+      run: ctest -C ${{env.BUILD_TYPE}}
