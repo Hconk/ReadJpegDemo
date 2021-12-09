@@ -35,7 +35,9 @@ jobs:
     - name: CloneITK
       run: git clone https://github.com/InsightSoftwareConsortium/ITK.git ${{github.workspace}}/ITK
     - name: ConfigITK
-      run: cmake ${{github.workspace}}/ITK -G "Visual Studio 15 2017 Win64" -B ${{github.workspace}}/build_itk -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/itk_install -DBUILD_TESTING=OFF -DEXPAT_BUILD_TESTS=OFF -DBUILD_EXAMPLES=OFF -DEXPAT_BUILD_EXAMPLES=OFF
+      run: cmake ${{github.workspace}}/ITK -G "Visual Studio 15 2017 Win64" -B ${{github.workspace}}/build_itk -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/itk_install \
+            -DBUILD_TESTING=OFF -DEXPAT_BUILD_TESTS=OFF \ 
+            -DBUILD_EXAMPLES=OFF -DEXPAT_BUILD_EXAMPLES=OFF -DITK_BUILD_DEFAULT_MODULES=OFF -DModule_ITKIOJPEG2000=ON -DModule_ITKOpenJPEG=ON
     - name: BuildITK
       run: cmake --build ${{github.workspace}}/build_itk --target install --config ${{env.BUILD_TYPE}}
     - name: ListITK
