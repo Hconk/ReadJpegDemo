@@ -9,7 +9,7 @@ int main(int, char**) {
     io = itk::JPEGImageIO::New();
     itk::ImageFileReader<ImageType>::Pointer JPEGReader;
     JPEGReader = itk::ImageFileReader<ImageType>::New();
-    JPEGReader->SetFileName( "D:/a/ReadJpegDemo/ReadJpegDemo/211869_09365_55_55_old.jpg" );
+    JPEGReader->SetFileName( "D:/a/ReadJpegDemo/ReadJpegDemo/211869_09365_55_55.jpg" );
     JPEGReader->SetImageIO(io);
     try
     {
