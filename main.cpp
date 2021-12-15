@@ -43,13 +43,14 @@ bool tiff_test(const std::string &filename)
   imageIO->ReadImageInformation();
   const auto pixelType = imageIO->GetComponentType();
   std::cout << filename << " pixel type: " << pixelType << std::endl;
-  std::cout << filename << " pixel type: " << imageIO->GetComponentType() << std::endl;
+  std::cout << filename << " pixel type string: "
+            << imageIO->GetComponentTypeAsString(pixelType) << std::endl;
   std::cout << filename << " dim: " << imageIO->GetNumberOfDimensions() << std::endl;
   return true;
 }
 
 int main(int, char**) {
-    jpg_test();
+    // jpg_test();
     tiff_test("D:/a/ReadJpegDemo/ReadJpegDemo/tiff_bug_1.tif");
     tiff_test("D:/a/ReadJpegDemo/ReadJpegDemo/tiff_bug_2.tif");
     return 0;
