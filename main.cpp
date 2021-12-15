@@ -39,7 +39,7 @@ bool tiff_test(const std::string &filename)
   }
   
 
-  imageIO-SetFileName(filename);
+  imageIO->SetFileName(filename);
   imageIO->ReadImageInformation();
   std::cout << "image pixel type: " << imageIO->GetComponentType() << std::endl;
   std::cout << "image dim: " << imageIO->GetNumberOfDimensions() << std::endl;
@@ -48,6 +48,6 @@ bool tiff_test(const std::string &filename)
 
 int main(int, char**) {
     jpg_test();
-    tiff_test(""D:/a/ReadJpegDemo/ReadJpegDemo/tiff_bug_1.tif"");
+    tiff_test("D:/a/ReadJpegDemo/ReadJpegDemo/tiff_bug_1.tif");
     return 0;
 }
