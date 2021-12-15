@@ -44,7 +44,7 @@ bool tiff_test(const std::string &filename)
   const auto pixelType = imageIO->GetComponentType();
   std::cout << filename << " pixel type: " << pixelType << std::endl;
   std::cout << filename << " pixel type: " << imageIO->GetComponentType() << std::endl;
-  sstd::cout << filename << " dim: " << imageIO->GetNumberOfDimensions() << std::endl;
+  std::cout << filename << " dim: " << imageIO->GetNumberOfDimensions() << std::endl;
   return true;
 }
 
