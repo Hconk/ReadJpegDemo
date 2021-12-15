@@ -31,16 +31,16 @@ void jpg_test()
 bool tiff_test(const std::string &filename)
 {
     
-  itk::ImageIOBase::Pointer imageIO = itk::ImageIOFactory::CreateImgeIO(filename.c_str(), itk::ImageIOFactory::ReadMode);
+  itk::ImageIOBase::Pointer imageIO = itk::ImageIOFactory::CreateImageIO(filename.c_str(), itk::ImageIOFactory::ReadMode);
    
-  if(imageIO.IsNull) {
+  if(imageIO.IsNull()) {
     std::cout << "fail create Image io." << std::endl;
     return false;
   }
   
 
   imageIO-SetFileName(filename);
-  imageIO->ReadImageInfomation();
+  imageIO->ReadImageInformation();
   std::cout << "image pixel type: " << imageIO->GetComponentType() << std::endl;
   std::cout << "image dim: " << imageIO->GetNumberOfDimensions() << std::endl;
   return true;
